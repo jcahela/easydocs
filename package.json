@@ -1,0 +1,18 @@
+{
+  "name": "easydocs",
+  "version": "1.0.0",
+  "description": "Full-stack document management app",
+  "author": "Jason Cahela <jpacahela@gmail.com>",
+  "scripts": {
+    "backend": "npm run dev -C backend",
+    "frontend": "npm run dev -C frontend",
+    "dev": "npm run backend & npm run frontend & wait",
+    "test:backend": "npm test -C backend -- run",
+    "test:frontend": "npm test -C frontend -- run",
+    "test": "npm run test:backend && npm run test:frontend"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}
