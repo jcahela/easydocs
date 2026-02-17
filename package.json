@@ -7,9 +7,11 @@
     "backend": "npm run dev -C backend",
     "frontend": "npm run dev -C frontend",
     "dev": "npm run backend & npm run frontend & wait",
-    "test:backend": "npm test -C backend -- run",
-    "test:frontend": "npm test -C frontend -- run",
-    "test": "npm run test:backend && npm run test:frontend"
+    "test:backend": "npm test -C backend",
+    "test:frontend": "npm test -C frontend",
+    "test:backend:run": "npm test -C backend -- run",
+    "test:frontend:run": "npm test -C frontend -- run",
+    "test": "npm run test:backend:run && npm run test:frontend:run"
   },
   "workspaces": [
     "backend",
