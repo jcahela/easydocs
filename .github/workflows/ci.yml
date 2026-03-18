@@ -15,17 +15,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: 20
-          cache: "npm"
+      - name: Build Docker images
+        run: docker-compose build
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Start services
+        run: docker-compose up -d
+
+      - name: Wait for services to be ready
+        run: |
+          timeout 60 bash -c 'until docker-compose exec -T backend curl -f http://localhost:3000 > /dev/null 2>&1; do sleep 2; done'
+          timeout 60 bash -c 'until docker-compose exec -T frontend curl -f http://localhost:5173 > /dev/null 2>&1; do sleep 2; done'
+
+      - name: Run database migrations
+        run: docker-compose exec -T backend npm run db:migrate
 
       - name: Run backend tests
-        run: npm run test:backend:run
+        run: docker-compose exec -T backend npm test -- run
 
       - name: Run frontend tests
-        run: npm run test:frontend:run
+        run: docker-compose exec -T frontend npm test -- run
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker-compose logs
+
+      - name: Cleanup
+        if: always()
+        run: docker-compose down -v
