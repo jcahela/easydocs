@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: easydocs-postgres
+    environment:
+      POSTGRES_USER: easydocsuser
+      POSTGRES_PASSWORD: qKyrdaHcn7sKbYURKvdQEm2wVG5k9Pmu8z5j8zig17Q
+      POSTGRES_DB: easydocsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U easydocsuser -d easydocsdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .  # Uses root Dockerfile
+    container_name: easydocs-backend
+    working_dir: /app/backend
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://easydocsuser:qKyrdaHcn7sKbYURKvdQEm2wVG5k9Pmu8z5j8zig17Q@postgres:5432/easydocsdb
+      PORT: 3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend  # Frontend might be needed by root node_modules
+      - /app/node_modules  # Don't overwrite
+
+  frontend:
+    build: .  # Same Dockerfile
+    container_name: easydocs-frontend
+    working_dir: /app/frontend
+    command: npm run dev -- --host
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app/frontend
+      - ./backend:/app/backend  # Backend might be needed by root node_modules
+      - /app/node_modules  # Don't overwrite
+
+volumes:
+  postgres_data:

@@ -1,3 +1,7 @@
+if (!process.env.DATABASE_URL) {
+  await import('dotenv/config');
+}
+
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -14,7 +18,7 @@ app.route('/api/documents', documentsRoutes);
 
 // Health check
 app.get('/', (c) => {
-  return c.json({ message: 'Easydocs API' });
+  return c.json({ message: 'Easydocs API - Docker!' });
 });
 
 const port = parseInt(process.env.PORT || '3000');
