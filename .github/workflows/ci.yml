@@ -30,8 +30,8 @@ jobs:
           timeout 60 bash -c 'until docker compose logs frontend 2>&1 | grep -q "ready in"; do sleep 2; done'
           echo "Frontend is ready!"
 
-      - name: Run database migrations
-        run: docker compose exec -T backend npm run db:migrate
+      - name: Push database schema
+        run: docker compose exec -T backend npx drizzle-kit push --force
 
       - name: Run backend tests
         run: docker compose exec -T backend npm test -- run

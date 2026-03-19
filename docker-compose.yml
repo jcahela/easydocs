@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:17
@@ -19,7 +17,7 @@ services:
       retries: 5
 
   backend:
-    build: .  # Uses root Dockerfile
+    build: .
     container_name: easydocs-backend
     working_dir: /app/backend
     command: npm run dev
@@ -33,11 +31,11 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/app/backend
-      - ./frontend:/app/frontend  # Frontend might be needed by root node_modules
-      - /app/node_modules  # Don't overwrite
+      - ./frontend:/app/frontend
+      - /app/node_modules
 
   frontend:
-    build: .  # Same Dockerfile
+    build: .
     container_name: easydocs-frontend
     working_dir: /app/frontend
     command: npm run dev -- --host
@@ -47,8 +45,8 @@ services:
       - backend
     volumes:
       - ./frontend:/app/frontend
-      - ./backend:/app/backend  # Backend might be needed by root node_modules
-      - /app/node_modules  # Don't overwrite
+      - ./backend:/app/backend
+      - /app/node_modules
 
 volumes:
   postgres_data:
