@@ -8,6 +8,5 @@ frontend/dist-ssr
 .env.*
 *.log
 .DS_Store
-backend/drizzle
 coverage
 .git
