@@ -11,7 +11,12 @@
     "test:frontend": "npm test -C frontend",
     "test:backend:run": "npm test -C backend -- run",
     "test:frontend:run": "npm test -C frontend -- run",
-    "test": "npm run test:backend:run && npm run test:frontend:run"
+    "test": "npm run test:backend:run && npm run test:frontend:run",
+    "docker:up": "docker compose up",
+    "docker:down": "docker compose down",
+    "docker:build": "docker compose up --build",
+    "docker:test": "docker compose exec backend npm test -- run && docker compose exec frontend npm test -- run",
+    "docker:migrate": "docker compose exec backend npx drizzle-kit push --force"
   },
   "workspaces": [
     "backend",
