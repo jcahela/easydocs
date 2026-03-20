@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import DocumentList from './views/DocumentList.vue'
-import { documentApi } from './services/api'
+import DocumentList from './DocumentList.vue'
+import { documentApi } from '../../services/api'
 
-vi.mock('./services/api', () => ({
+vi.mock('../../services/api', () => ({
   documentApi: {
     getAll: vi.fn().mockResolvedValue([]),
   }

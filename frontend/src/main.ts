@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './assets/main.css'
 import App from './App.vue'
-import DocumentList from './views/DocumentList.vue'
+import DocumentList from './views/DocumentList/DocumentList.vue'
 
 const router = createRouter({
   history: createWebHistory(),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { documentApi, type Document } from '../services/api';
+import { documentApi, type Document } from '../../services/api';
 
 const router = useRouter();
 const documents = ref<Document[]>([]);
