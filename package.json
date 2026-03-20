@@ -16,6 +16,8 @@
     "docker:down": "docker compose down",
     "docker:build": "docker compose up --build",
     "docker:test": "docker compose exec backend npm test -- run && docker compose exec frontend npm test -- run",
+    "docker:test:frontend": "docker compose exec frontend npm test -- run",
+    "docker:test:backend": "docker compose exec backend npm test -- run",
     "docker:migrate": "docker compose exec backend npx drizzle-kit push --force"
   },
   "workspaces": [

@@ -6,13 +6,8 @@ export interface Document {
   id: number;
   title: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface NewDocument {
-  title: string;
-  content: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const documentApi = {
